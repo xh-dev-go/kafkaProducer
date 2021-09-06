@@ -88,9 +88,6 @@ func readInput(writer *kafka.Writer, topic string, doneChan chan bool, delay int
 	}
 
 	for {
-		if hasDelay {
-			time.Sleep(delayFor)
-		}
 		index++
 		line, _, err := reader.ReadLine()
 		if err == io.EOF {
@@ -102,7 +99,10 @@ func readInput(writer *kafka.Writer, topic string, doneChan chan bool, delay int
 			println(string(line))
 		}
 		send_message(writer, topic, fmt.Sprintf("N_key_%s", time.Now().Format(time.RFC3339)), string(line))
-		//println(line)
+
+		if hasDelay {
+			time.Sleep(delayFor)
+		}
 	}
 }
 
