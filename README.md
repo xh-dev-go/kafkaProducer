@@ -3,6 +3,12 @@
 ## Introduction
 kafkaProducer is a simplified kafka producer client. It's designed to be receiving stdin and route to target kafka broker.
 
+## Build
+
+```shell
+env GOOS=linux GOARCH=arm go build -o ./target/kafkaProducer
+```
+
 ## Demo
 
 ### Usage

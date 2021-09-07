@@ -14,6 +14,8 @@ import (
 	"time"
 )
 
+const VERSION_TAG = "1.0.0"
+
 var topic, server string
 
 type CustHeaders []kafka.Header
@@ -127,17 +129,24 @@ func main() {
 	var oneOff bool
 	var shouldPrint bool
 	var delay int64
+	var showVersion bool
 	flag.StringVar(&topic, "topic", "", "kafka topic")
 	flag.StringVar(&server, "host", "", "kafka host")
 	flag.BoolVar(&oneOff, "single-message", false, "toggle on if read all the input and send once")
 	flag.BoolVar(&shouldPrint, "print", false, "toggle on if want to print the message transferred")
 	flag.Int64Var(&delay, "delay", -1, "delay for ms, only work if not in single-message mode")
 	flag.Var(&headers, "header", "headers")
+	flag.BoolVar(&showVersion, "showVersion", false, "show showVersion")
 	flag.Parse()
 
 	if len(os.Args) == 1 {
 		flag.PrintDefaults()
 		os.Exit(1)
+	}
+
+	if showVersion {
+		println(VERSION_TAG)
+		os.Exit(0)
 	}
 
 	if topic == "" {
