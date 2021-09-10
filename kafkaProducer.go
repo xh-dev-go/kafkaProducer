@@ -14,7 +14,7 @@ import (
 	"time"
 )
 
-const VERSION_TAG = "1.0.0"
+const VERSION_TAG = "1.0.1"
 
 var topic, server string
 
@@ -136,7 +136,7 @@ func main() {
 	flag.BoolVar(&shouldPrint, "print", false, "toggle on if want to print the message transferred")
 	flag.Int64Var(&delay, "delay", -1, "delay for ms, only work if not in single-message mode")
 	flag.Var(&headers, "header", "headers")
-	flag.BoolVar(&showVersion, "showVersion", false, "show showVersion")
+	flag.BoolVar(&showVersion, "version", false, "show showVersion")
 	flag.Parse()
 
 	if len(os.Args) == 1 {
