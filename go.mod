@@ -1,5 +1,5 @@
-module kafkaProducer
+module github.com/xh-dev-go/kafkaProducer
 
 go 1.16
 
-require github.com/segmentio/kafka-go v0.4.17
+require github.com/xh-dev-go/xhUtils v1.0.0 // indirect

@@ -7,52 +7,19 @@ import (
 	"flag"
 	"fmt"
 	"github.com/segmentio/kafka-go"
+	"github.com/xh-dev-go/xhUtils/xhKafka"
 	"io"
 	"log"
 	"os"
-	"strings"
 	"time"
 )
 
-const VERSION_TAG = "1.0.1"
+const VERSION_TAG = "1.0.2"
 
 var topic, server string
 
-type CustHeaders []kafka.Header
 
-func (i *CustHeaders) toKafkaHeaders() []kafka.Header {
-	return *i
-}
-
-func (i *CustHeaders) String() string {
-	var str = ""
-
-	for _, item := range *i {
-		str += item.Key
-		str += "="
-		str += string(item.Value)
-		str += ", "
-	}
-	if len(str) > 0 {
-		return str[:len(str)-2]
-	} else {
-		return str
-	}
-}
-func (i *CustHeaders) Set(value string) error {
-	vs := strings.Split(value, "=")
-	if len(vs) != 2 {
-		panic("Header not with correct format: " + value)
-	} else {
-		*i = append(*i, kafka.Header{
-			Key:   vs[0],
-			Value: []byte(vs[1]),
-		})
-	}
-	return nil
-}
-
-var headers CustHeaders
+var headers xhKafka.KafkaHeaders
 
 func kafkaProducer(server string) *kafka.Writer {
 	w := &kafka.Writer{
@@ -70,7 +37,7 @@ func send_message(writer *kafka.Writer, topic string, key string, msg string) {
 			Topic:   topic,
 			Key:     []byte(key),
 			Value:   []byte(msg),
-			Headers: headers.toKafkaHeaders(),
+			Headers: headers.ToKafkaHeaders(),
 		},
 	)
 	if err != nil {
